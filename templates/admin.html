@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-options">
+    <ul>
+        <li><a href="{{ url_for('add_product') }}">Add Products</a></li>
+    </ul>
+</div>
+
+<div class="product-container">
+    
+    <!-- Add the "Search Product" column here -->
+    <div class="column column-1">
+        <div class="sell-product-content">
+            <h1>Search Product</h1>
+            <form action="{{ url_for('search_product') }}" method="POST" class="sell-product-form">
+                <div>
+                    <label for="product-id">Product id:</label>
+                    <input type="text" name="product-id" class="sell-product-input" id="product-id">
+                </div>
+
+                <div>
+                    <label for="product-name">Product Name:</label>
+                    <input type="text" name="product-name" class="sell-product-input" id="product-name">
+                </div>
+
+                <div>
+                    <label for="product-category">Product Category:</label>
+                    <input type="text" name="product-category" class="sell-product-input" id="product-category">
+                </div>
+    
+                <div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add the "Search Product" column here -->
+    <div class="column column-2">
+        <div class="search-product-content">
+            <h1>Products</h1>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Categorie</th>
+                    <th>Descriere</th>
+                    <th>Pret Achiz</th>
+                    <th>Pret Vanzare</th>
+                </tr>
+                {% if products %}
+                    {% for product in products %}
+                    <tr>
+                        {% if not product.sold %}
+                        <td class="product-unsold">{{ product.product_id }}</td>
+                        <td class="product-unsold">{{ product.name.title() }}</td>
+                        <td class="product-unsold">{{ product.category.title() }}</td>
+                        <td class="product-unsold">{{ product.description }}</td>
+                        <td class="product-unsold">RON {{ product.price }}</td>
+                        <td class="product-unsold">RON {{ product.sale_price }}</td>
+                        {% else %}
+                        <td class="product-sold">{{ product.product_id }}</td>
+                        <td class="product-sold">{{ product.name.title() }}</td>
+                        <td class="product-sold">{{ product.category.title() }}</td>
+                        <td class="product-sold">{{ product.description }}</td>
+                        <td class="product-sold">RON {{ product.price }}</td>
+                        <td class="product-sold">RON {{ product.sale_price }}</td> 
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+
+            <div class="form-sell">
+                <form action="{{ url_for('sell_product')}}" method="post">
+                    <label for="product_id">Enter Product ID</label>
+                    <input type="number" name="product_id_forsale" class="sell-product-input" id="product-id" required>
+                    <label for="sale-price">Sale Price:</label>
+                    <input type="number" name="sale-price" class="sell-product-input" id="sale-price" required>
+                    <input type="submit" name="submit-sell" class="sell-product-submit" id="submit-sell"> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- All Products table -->
+<div class="search-all-products">
+    <div class="search-all-products-container">
+        {% if all_products %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nume</th>
+                <th>Categorie</th>
+                <th>Descriere</th>
+                <th>Pret Achiz.</th>
+                <th>Pret Vanzare</th>
+                <th>Stare</th>
+            </tr>
+            {% for product in all_products %}  
+                <tr>
+                    <td>{{ product.product_id }}</td>
+                    <td>{{ product.name.title() }}</td>
+                    <td>{{ product.category.title() }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>RON {{ product.price }}</td>
+                    <td>RON {{ product.sale_price }}</td>
+                    {% if product.sold %}
+                    <td>Vandut</td>
+                    {% else %}
+                    <td>Disponibil</td>
+                    {% endif %}
+                </tr>         
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

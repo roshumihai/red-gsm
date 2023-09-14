@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    background-color: #F5F5F5 ;
+    color: #333333;
+}
+
+/* Navigation styles */
+.topnav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin: 1% 0 0 1%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #333333;
+    font-weight: bold;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    margin: 0 5px;
+}
+
+.topnav a:hover {
+    color: #666666 ;
+    font-weight: bold;
+}
+
+.topnav a.active {
+    color: #c8024c;
+    font-weight: bold;
+}
+
+.base-header {
+    text-align: center;
+    color: #333333;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: row;
+    float: right;
+    margin-right: 2.5%;
+    align-items: center;
+}
+
+.login-container p {
+    color: #007BFF;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 25px;
+}
+
+.login-container a {
+    padding: 15px;
+}

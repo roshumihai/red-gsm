@@ -1,0 +1,172 @@
+
+
+.product-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+}
+
+.product-container h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-nav {
+    display: block;
+}
+
+.admin-options {
+    width: 80%;
+    margin: 35px auto;
+    display: flex;
+    padding: 0 10px 7px 0;
+    border-bottom: 2px solid #333;
+    
+}
+
+.admin-options ul li {
+    list-style: none;
+    margin: 0 35px 0 0;
+}
+
+.admin-options ul li a {
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 5px 25px 5px 0;
+    color: #222;
+    border-right: 2px solid #222;
+}
+
+.admin-options ul li a:hover {
+    color: #7a858f;
+}
+
+.column {
+    margin: 0 10px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.column-1 {
+    width: 33%;
+    max-height: 380px;
+}
+
+.column-2 {
+    width: 66%;
+}
+
+.add-product-content,
+.sell-product-content,
+.search-product-content {
+    text-align: center;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.add-product-form,
+.sell-product-form {
+    text-align: left;
+}
+
+.add-product-label,
+.sell-product-label {
+    display: block;
+}
+
+.sell-product-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.sell-product-submit {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sell-product-submit:hover {
+    background-color: #5aa8fc;
+}
+
+.btn {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #5aa8fc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.form-sell {
+    margin-top: 30px;
+    text-align: start;
+}
+
+.search-all-products {
+    padding: 30px;
+}
+
+.product-sold {
+    background-color: #ff5e6b;
+}
+.product-unsold {
+    background-color: #c1ffd5;
+}
+
+/* Media query responsiveness */
+@media (max-width: 768px) {
+    .product-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .column {
+        margin: 10px 0;
+        width: 100%;
+    }
+}

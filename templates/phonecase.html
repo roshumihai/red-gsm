@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admin
+{% endblock %}
+
+{% block content %}
+
+<div class="products-links">
+    <ul class="products-links-ul">
+        <li><a href="{{ url_for('phone') }}">Telefon</a></li>
+        <li><a href="{{ url_for('laptop') }}">Laptop</a></li>
+        <li><a href="{{ url_for('display') }}">Display</a></li>
+        <li><a href="{{ url_for('batterie') }}">Baterie</a></li>
+        <li><a class="active" href="{{ url_for('phonecase') }}">Husa</a></li>
+        <li><a href="{{ url_for('other') }}">Altele</a></li>
+    </ul>
+</div>
+
+<div class="phonecases-container">
+    <div class="search-all-products-container">
+        
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                
+                <th>Description</th>
+                
+                <th>Sale Price</th>
+            </tr>
+            {% if phonecases %}
+                {% for phonecase in phonecases %}  
+                    <tr>
+                        <td>{{ phonecase.product_id }}</td>
+                        <td>{{ phonecase.name.title() }}</td>
+                        
+                        <td>{{ phonecase.description }}</td>
+                        
+                        <td>RON {{ phonecase.sale_price }}</td>
+                    </tr>         
+                {% endfor %}
+            {% endif %}
+        </table>
+        
+    </div>
+</div>
+
+{% endblock %}

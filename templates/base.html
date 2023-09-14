@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login-register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='products.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add-product.css') }}">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="topnav">
+        {% if current_user.is_authenticated %}
+        <a {% if request.endpoint == 'home' %}class="active"{% endif %} href="{{ url_for('home') }}">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#more">More</a>
+
+        
+        {% if current_user.admin or current_user.username.lower() == "roshu" %}
+        <a {% if request.endpoint == 'admin' %}class="active"{% endif %} href="{{ url_for('admin') }}">Admin</a>
+        {% endif %}
+        
+        <div class="login-container">
+            <p>{{ current_user.username.title() }}</p>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+        
+        {% else %}
+        <a {% if request.endpoint == 'dashboard' %}class="active"{% endif %} href="{{ url_for('dashboard') }}">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#more">More</a>
+        
+        <div class="login-container">
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+        {% endif %}
+    </div>
+    {% block content %}
+
+    {% endblock %}  
+</body>
+</html>

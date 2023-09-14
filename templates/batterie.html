@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Baterries
+{% endblock %}
+
+{% block content %}
+
+<div class="products-links">
+    <ul class="products-links-ul">
+        <li><a href="{{ url_for('phone') }}">Telefon</a></li>
+        <li><a href="{{ url_for('laptop') }}">Laptop</a></li>
+        <li><a href="{{ url_for('display') }}">Display</a></li>
+        <li><a class="active" href="{{ url_for('batterie') }}">Baterie</a></li>
+        <li><a href="{{ url_for('phonecase') }}">Husa</a></li>
+        <li><a href="{{ url_for('other') }}">Altele</a></li>
+    </ul>
+</div>
+
+<div class="batterie-container">
+    <div class="search-all-products-container">
+        
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                
+                <th>Description</th>
+                
+                <th>Sale Price</th>
+            </tr>
+            {% if batteries %}
+                {% for batterie in batteries %}  
+                    <tr>
+                        <td>{{ batterie.product_id }}</td>
+                        <td>{{ batterie.name.title() }}</td>
+                        
+                        <td>{{ batterie.description }}</td>
+                        
+                        <td>RON {{ batterie.sale_price }}</td>
+                    </tr>         
+                {% endfor %}
+            {% endif %}
+        </table>
+        
+    </div>
+</div>
+
+{% endblock %}

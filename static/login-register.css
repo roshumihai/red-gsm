@@ -1,0 +1,70 @@
+
+/* Style the form container */
+.input-form {
+    margin: 0 auto;
+    width: 300px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style form groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Style form inputs */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333333; /* Dark Gray */
+}
+
+/* Style the submit button */
+.submit-form {
+    background-color: #007BFF; /* Blue */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button {
+    text-align: center;
+}
+
+.submit-form:hover {
+    background-color: #0056b3;
+}
+
+/* Style error message */
+.error {
+    color: #FF6B6B; /* Red */
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Style sign-up link */
+.sign-up {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.sign-up a {
+    text-decoration: none;
+    color: #007BFF; /* Blue */
+}
+
+.sign-up a:hover {
+    text-decoration: underline;
+}
+
+.auth-header {
+    color: #333333;
+    text-align: center;
+    margin-top: 9%;
+}

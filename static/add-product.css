@@ -1,0 +1,89 @@
+.add-prod-container {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.add-product-content {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: 60px;
+    padding: 0 30px 30px 30px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+}
+.add-product-content h1 {
+    color: #214d9e;
+    margin-top: -40px;
+    margin-bottom: 40px;
+}
+
+.add-product-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-product-label {
+    margin-bottom: 5px;
+    text-align: end;
+}
+
+.add-product-form-control {
+    width: 100%;
+    padding: 7px;
+    margin-bottom: 15px;
+}
+
+.add-product-form-control.aplc {
+    resize: none;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    max-width: 350px;
+    max-height: 60px;
+    min-height: 40px;
+}
+
+.add-product-content .message {
+    margin-top: 10px;
+}
+
+.add-product-content form div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.add-product-content form div label {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.add-product-content form div input[type="text"],
+.add-product-content form div input[type="number"] {
+    flex: 2;
+}
+
+.add-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-prod-list img {
+    max-height: 200px;
+    /* You can add additional styles here */
+}

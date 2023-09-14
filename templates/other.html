@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Others
+{% endblock %}
+
+{% block content %}
+
+<div class="products-links">
+    <ul class="products-links-ul">
+        <li><a href="{{ url_for('phone') }}">Telefon</a></li>
+        <li><a href="{{ url_for('laptop') }}">Laptop</a></li>
+        <li><a href="{{ url_for('display') }}">Display</a></li>
+        <li><a href="{{ url_for('batterie') }}">Baterie</a></li>
+        <li><a href="{{ url_for('phonecase') }}">Husa</a></li>
+        <li><a class="active" href="{{ url_for('other') }}">Altele</a></li>
+    </ul>
+</div>
+
+<div class="other-container">
+    <div class="search-all-products-container">
+        
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                
+                <th>Description</th>
+                
+                <th>Sale Price</th>
+            </tr>
+            {% if others %}
+                {% for other in others %}  
+                    <tr>
+                        <td>{{ other.product_id }}</td>
+                        <td>{{ other.name.title() }}</td>
+                        
+                        <td>{{ other.description }}</td>
+                        
+                        <td>RON {{ other.sale_price }}</td>
+                    </tr>         
+                {% endfor %}
+            {% endif %}
+        </table>
+        
+    </div>
+</div>
+
+{% endblock %}
