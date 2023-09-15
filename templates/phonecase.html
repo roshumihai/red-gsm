@@ -17,33 +17,29 @@ Admin
     </ul>
 </div>
 
-<div class="phonecases-container">
-    <div class="search-all-products-container">
-        
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                
-                <th>Description</th>
-                
-                <th>Sale Price</th>
-            </tr>
-            {% if phonecases %}
-                {% for phonecase in phonecases %}  
-                    <tr>
-                        <td>{{ phonecase.product_id }}</td>
-                        <td>{{ phonecase.name.title() }}</td>
-                        
-                        <td>{{ phonecase.description }}</td>
-                        
-                        <td>RON {{ phonecase.sale_price }}</td>
-                    </tr>         
-                {% endfor %}
-            {% endif %}
-        </table>
-        
+<div class="phonecase-gallery">
+    {% for phonecase in phonecases %}
+    <div class="phonecase-content">
+        <div class="phonecase-photo">
+        {% if phonecase.image_ref %}
+            <img src="{{ url_for('static', filename='uploads/' + phonecase.image_ref) }}" alt="Comment Image" class="product-image">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-phonecase.jpg') }}" alt="Comment Image" class="product-image">
+        {% endif %}
+        </div>
+        <h3>{{ phonecase.name.title() }}</h3>
+        <p>{{ phonecase.description }}</p>
+        <h6>RON {{ phonecase.sale_price }}</h6>
+        <ul>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star"></i></li>
+        </ul>
+        <button class="buy-5">Buy Now</button>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

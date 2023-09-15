@@ -17,33 +17,29 @@ Phones
     </ul>
 </div>
 
-<div class="phone-container">
-    <div class="search-all-products-container">
-        
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                
-                <th>Description</th>
-                
-                <th>Sale Price</th>
-            </tr>
-            {% if phones %}
-                {% for phone in phones %}  
-                    <tr>
-                        <td>{{ phone.product_id }}</td>
-                        <td>{{ phone.name.title() }}</td>
-                        
-                        <td>{{ phone.description }}</td>
-                        
-                        <td>RON {{ phone.sale_price }}</td>
-                    </tr>         
-                {% endfor %}
-            {% endif %}
-        </table>
-        
+<div class="phone-gallery">
+    {% for phone in phones %}
+    <div class="phone-content">
+        <div class="phone-photo">
+        {% if phone.image_ref %}
+            <img src="{{ url_for('static', filename='uploads/' + phone.image_ref) }}" alt="Comment Image" class="product-image">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-phone.jpg') }}" alt="Comment Image" class="product-image">
+        {% endif %}
+        </div>
+        <h3>{{ phone.name.title() }}</h3>
+        <p>{{ phone.description }}</p>
+        <h6>RON {{ phone.sale_price }}</h6>
+        <ul>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star"></i></li>
+        </ul>
+        <button class="buy-1">Buy Now</button>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

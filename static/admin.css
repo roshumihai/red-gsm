@@ -150,6 +150,11 @@ tr:nth-child(even) {
 .search-all-products {
     padding: 30px;
 }
+.search-all-products-container{
+    max-height: 400px;
+    overflow-y: auto;
+
+}
 
 .product-sold {
     background-color: #ff5e6b;

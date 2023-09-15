@@ -17,33 +17,29 @@ Baterries
     </ul>
 </div>
 
-<div class="batterie-container">
-    <div class="search-all-products-container">
-        
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                
-                <th>Description</th>
-                
-                <th>Sale Price</th>
-            </tr>
-            {% if batteries %}
-                {% for batterie in batteries %}  
-                    <tr>
-                        <td>{{ batterie.product_id }}</td>
-                        <td>{{ batterie.name.title() }}</td>
-                        
-                        <td>{{ batterie.description }}</td>
-                        
-                        <td>RON {{ batterie.sale_price }}</td>
-                    </tr>         
-                {% endfor %}
-            {% endif %}
-        </table>
-        
+<div class="batterie-gallery">
+    {% for batterie in batteries %}
+    <div class="batterie-content">
+        <div class="batterie-photo">
+        {% if batterie.image_ref %}
+            <img src="{{ url_for('static', filename='uploads/' + batterie.image_ref) }}" alt="Comment Image" class="product-image">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-batterie.jpg') }}" alt="Comment Image" class="product-image">
+        {% endif %}
+        </div>
+        <h3>{{ batterie.name.title() }}</h3>
+        <p>{{ batterie.description }}</p>
+        <h6>RON {{ batterie.sale_price }}</h6>
+        <ul>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star"></i></li>
+        </ul>
+        <button class="buy-4">Buy Now</button>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

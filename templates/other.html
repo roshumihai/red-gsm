@@ -17,33 +17,29 @@ Others
     </ul>
 </div>
 
-<div class="other-container">
-    <div class="search-all-products-container">
-        
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                
-                <th>Description</th>
-                
-                <th>Sale Price</th>
-            </tr>
-            {% if others %}
-                {% for other in others %}  
-                    <tr>
-                        <td>{{ other.product_id }}</td>
-                        <td>{{ other.name.title() }}</td>
-                        
-                        <td>{{ other.description }}</td>
-                        
-                        <td>RON {{ other.sale_price }}</td>
-                    </tr>         
-                {% endfor %}
-            {% endif %}
-        </table>
-        
+<div class="other-gallery">
+    {% for other in others %}
+    <div class="other-content">
+        <div class="other-photo">
+        {% if other.image_ref %}
+            <img src="{{ url_for('static', filename='uploads/' + other.image_ref) }}" alt="Comment Image" class="product-image">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-other.jpg') }}" alt="Comment Image" class="product-image">
+        {% endif %}
+        </div>
+        <h3>{{ other.name.title() }}</h3>
+        <p>{{ other.description }}</p>
+        <h6>RON {{ other.sale_price }}</h6>
+        <ul>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star"></i></li>
+        </ul>
+        <button class="buy-6">Buy Now</button>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

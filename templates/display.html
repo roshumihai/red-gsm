@@ -17,33 +17,29 @@ Displays
     </ul>
 </div>
 
-<div class="display-container">
-    <div class="search-all-products-container">
-        
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                
-                <th>Description</th>
-                
-                <th>Sale Price</th>
-            </tr>
-            {% if displays %}
-                {% for display in displays %}  
-                    <tr>
-                        <td>{{ display.product_id }}</td>
-                        <td>{{ display.name.title() }}</td>
-                        
-                        <td>{{ display.description }}</td>
-                        
-                        <td>RON {{ display.sale_price }}</td>
-                    </tr>         
-                {% endfor %}
-            {% endif %}
-        </table>
-        
+<div class="display-gallery">
+    {% for display in displays %}
+    <div class="display-content">
+        <div class="display-photo">
+        {% if display.image_ref %}
+            <img src="{{ url_for('static', filename='uploads/' + display.image_ref) }}" alt="Comment Image" class="product-image">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-display.jpg') }}" alt="Comment Image" class="product-image">
+        {% endif %}
+        </div>
+        <h3>{{ display.name.title() }}</h3>
+        <p>{{ display.description }}</p>
+        <h6>RON {{ display.sale_price }}</h6>
+        <ul>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star"></i></li>
+        </ul>
+        <button class="buy-3">Buy Now</button>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

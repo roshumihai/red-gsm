@@ -17,33 +17,29 @@ Laptops
     </ul>
 </div>
 
-<div class="laptop-container">
-    <div class="search-all-products-container">
-        
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                
-                <th>Description</th>
-                
-                <th>Sale Price</th>
-            </tr>
-            {% if laptops %}
-                {% for laptop in laptops %}  
-                    <tr>
-                        <td>{{ laptop.product_id }}</td>
-                        <td>{{ laptop.name.title() }}</td>
-                        
-                        <td>{{ laptop.description }}</td>
-                        
-                        <td>RON {{ laptop.sale_price }}</td>
-                    </tr>         
-                {% endfor %}
-            {% endif %}
-        </table>
-        
+<div class="laptop-gallery">
+    {% for laptop in laptops %}
+    <div class="laptop-content">
+        <div class="laptop-photo">
+        {% if laptop.image_ref %}
+            <img src="{{ url_for('static', filename='uploads/' + laptop.image_ref) }}" alt="Comment Image" class="product-image">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default-laptop.jpg') }}" alt="Comment Image" class="product-image">
+        {% endif %}
+        </div>
+        <h3>{{ laptop.name.title() }}</h3>
+        <p>{{ laptop.description }}</p>
+        <h6>RON {{ laptop.sale_price }}</h6>
+        <ul>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star checked"></i></li>
+            <li><i class="fa fa-star"></i></li>
+        </ul>
+        <button class="buy-2">Buy Now</button>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

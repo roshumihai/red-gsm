@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import StringField, FloatField, TextAreaField, SelectField, SubmitField, validators, PasswordField, IntegerField
 from wtforms.validators import InputRequired, Length, ValidationError, Regexp
-from sqlalchemy import func
+from sqlalchemy import func, desc
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
@@ -275,11 +275,17 @@ def add_product():
             image_ref.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             image_ref = filename
 
-        # Ensure sale_price is set to 0.0 if it's empty
-        if sale_price is None or sale_price == "":
-            sale_price = 0
 
-        new_product = Product(name=name.lower(), category=category.lower(), description=description, price=price, sale_price=sale_price, image_ref=image_ref)
+            if sale_price is None or sale_price == "":
+                sale_price = 0
+
+            new_product = Product(name=name.lower(), category=category.lower(), description=description, price=price, sale_price=sale_price, image_ref=image_ref)
+
+        else:
+            if sale_price is None or sale_price == "":
+                sale_price = 0
+
+            new_product = Product(name=name.lower(), category=category.lower(), description=description, price=price, sale_price=sale_price)
 
         db.session.add(new_product)
         db.session.commit()
@@ -355,13 +361,13 @@ def sell_product():
 
 @app.route('/phone.html', methods=['POST', 'GET'])
 def phone():
-    phones = Product.query.filter_by(category='phones')
+    phones = Product.query.filter_by(category='phones').order_by(Product.product_id.desc()).all()
 
     return render_template('phone.html', phones=phones)
 
 @app.route('/laptop.html', methods=['POST', 'GET'])
 def laptop():
-    laptops = Product.query.filter_by(category='laptops')
+    laptops = Product.query.filter_by(category='laptops').order_by(Product.product_id.desc()).all()
     return render_template('laptop.html', laptops=laptops)
 
 @app.route('/display.html', methods=['POST', 'GET'])
