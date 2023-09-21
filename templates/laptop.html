@@ -19,26 +19,34 @@ Laptops
 
 <div class="laptop-gallery">
     {% for laptop in laptops %}
+    {% if not laptop.sold %}
     <div class="laptop-content">
-        <div class="laptop-photo">
-        {% if laptop.image_ref %}
-            <img src="{{ url_for('static', filename='uploads/' + laptop.image_ref) }}" alt="Comment Image" class="product-image">
-            {% else %}
-            <img src="{{ url_for('static', filename='images/default-laptop.jpg') }}" alt="Comment Image" class="product-image">
-        {% endif %}
-        </div>
-        <h3>{{ laptop.name.title() }}</h3>
-        <p>{{ laptop.description }}</p>
-        <h6>RON {{ laptop.sale_price }}</h6>
-        <ul>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star"></i></li>
-        </ul>
-        <button class="buy-2">Buy Now</button>
+        <a href="{{ url_for('product_details', product_id=laptop.product_id)}}">
+            <div class="laptop-photo-container">
+                <div class="laptop-photo">
+                    {% if laptop.image_references and laptop.image_references|length > 0 %}
+                        <img src="{{ url_for('static', filename='uploads/' + laptop.image_references[0].image_ref) }}" alt="Product Image" class="product-image" id="product-image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/default-laptop.jpg') }}" alt="Default Image" class="product-image">
+                    {% endif %}
+                </div>
+            </div>
+            <h3>{{ laptop.name.title() }}</h3>
+            <p>{{ laptop.description }}</p>
+            <h6>RON {{ laptop.sale_price }}</h6>
+            <ul>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <div class="laptop-button">
+                <button>Buy Now</button>
+            </div>
+        </a>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 

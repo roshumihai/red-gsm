@@ -1,0 +1,37 @@
+.change-price-container {
+    width: 88%;
+    margin: 0 auto;
+}
+
+.change-price-header {
+    margin: 0 0 30px 30px;
+    color: #fff;
+}
+
+.add-product-form {
+    width: 40%;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.add-product-form label {
+
+}
+
+.change-price-input {
+    padding: 15px 0 15px 20px;
+    background: rgba(0,0,0,0.2);
+    color: #fff;
+    margin: 20px auto;
+    width: 100%;
+}
+
+.change-price-submit {
+    padding: 10px 20px;
+    background: rgba(48, 75, 165, 0.4);
+    width: 180px;
+    color: #fff;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+}

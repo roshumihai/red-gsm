@@ -19,26 +19,34 @@ Admin
 
 <div class="phonecase-gallery">
     {% for phonecase in phonecases %}
+    {% if not phonecase.sold %}
     <div class="phonecase-content">
-        <div class="phonecase-photo">
-        {% if phonecase.image_ref %}
-            <img src="{{ url_for('static', filename='uploads/' + phonecase.image_ref) }}" alt="Comment Image" class="product-image">
-            {% else %}
-            <img src="{{ url_for('static', filename='images/default-phonecase.jpg') }}" alt="Comment Image" class="product-image">
-        {% endif %}
-        </div>
-        <h3>{{ phonecase.name.title() }}</h3>
-        <p>{{ phonecase.description }}</p>
-        <h6>RON {{ phonecase.sale_price }}</h6>
-        <ul>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star"></i></li>
-        </ul>
-        <button class="buy-5">Buy Now</button>
+        <a href="{{ url_for('product_details', product_id=phonecase.product_id)}}">
+            <div class="phonecase-photo-container">
+                <div class="phonecase-photo">
+                    {% if phonecase.image_references and phonecase.image_references|length > 0 %}
+                        <img src="{{ url_for('static', filename='uploads/' + phonecase.image_references[0].image_ref) }}" alt="Product Image" class="product-image" id="product-image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/default-phonecase.jpg') }}" alt="Default Image" class="product-image">
+                    {% endif %}
+                </div>
+            </div>
+            <h3>{{ phonecase.name.title() }}</h3>
+            <p>{{ phonecase.description }}</p>
+            <h6>RON {{ phonecase.sale_price }}</h6>
+            <ul>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <div class="phonecase-button">
+                <button>Buy Now</button>
+            </div>
+        </a>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 

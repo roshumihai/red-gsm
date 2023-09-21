@@ -8,10 +8,10 @@ Baterries
 
 <div class="products-links">
     <ul class="products-links-ul">
-        <li><a href="{{ url_for('phone') }}">Telefon</a></li>
+        <li><a class="active" href="{{ url_for('phone') }}">Telefon</a></li>
         <li><a href="{{ url_for('laptop') }}">Laptop</a></li>
         <li><a href="{{ url_for('display') }}">Display</a></li>
-        <li><a class="active" href="{{ url_for('batterie') }}">Baterie</a></li>
+        <li><a href="{{ url_for('batterie') }}">Baterie</a></li>
         <li><a href="{{ url_for('phonecase') }}">Husa</a></li>
         <li><a href="{{ url_for('other') }}">Altele</a></li>
     </ul>
@@ -19,26 +19,34 @@ Baterries
 
 <div class="batterie-gallery">
     {% for batterie in batteries %}
+    {% if not batterie.sold %}
     <div class="batterie-content">
-        <div class="batterie-photo">
-        {% if batterie.image_ref %}
-            <img src="{{ url_for('static', filename='uploads/' + batterie.image_ref) }}" alt="Comment Image" class="product-image">
-            {% else %}
-            <img src="{{ url_for('static', filename='images/default-batterie.jpg') }}" alt="Comment Image" class="product-image">
-        {% endif %}
-        </div>
-        <h3>{{ batterie.name.title() }}</h3>
-        <p>{{ batterie.description }}</p>
-        <h6>RON {{ batterie.sale_price }}</h6>
-        <ul>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star"></i></li>
-        </ul>
-        <button class="buy-4">Buy Now</button>
+        <a href="{{ url_for('product_details', product_id=batterie.product_id)}}">
+            <div class="batterie-photo-container">
+                <div class="batterie-photo">
+                    {% if batterie.image_references and batterie.image_references|length > 0 %}
+                        <img src="{{ url_for('static', filename='uploads/' + batterie.image_references[0].image_ref) }}" alt="Product Image" class="product-image" id="product-image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/default-batterie.jpg') }}" alt="Default Image" class="product-image">
+                    {% endif %}
+                </div>
+            </div>
+            <h3>{{ batterie.name.title() }}</h3>
+            <p>{{ batterie.description }}</p>
+            <h6>RON {{ batterie.sale_price }}</h6>
+            <ul>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <div class="batterie-button">
+                <button>Buy Now</button>
+            </div>
+        </a>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 

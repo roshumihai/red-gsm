@@ -2,25 +2,26 @@
 /* Style the form container */
 .input-form {
     margin: 0 auto;
-    width: 300px;
-    padding: 20px;
-    background-color: #f5f5f5;
+    width: 25%;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(999, 999, 999, 0.3);
 }
 
 /* Style form groups */
 .form-group {
-    margin-bottom: 15px;
+    margin: 25px 0;
 }
 
 /* Style form inputs */
 .form-control {
     width: 100%;
-    padding: 10px;
+    padding: 10px 10px 10px 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    color: #333333; /* Dark Gray */
+    color: #ffffff; /* Dark Gray */
+    background: rgba(0, 0, 0, 0.7)
 }
 
 /* Style the submit button */
@@ -64,7 +65,7 @@
 }
 
 .auth-header {
-    color: #333333;
+    color: #fff;
     text-align: center;
     margin-top: 9%;
 }

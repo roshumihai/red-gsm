@@ -10,6 +10,11 @@
 .product-container h1 {
     font-size: 20px;
     margin-bottom: 20px;
+    color: #999;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .admin-nav {
@@ -19,10 +24,14 @@
 .admin-options {
     width: 80%;
     margin: 35px auto;
-    display: flex;
     padding: 0 10px 7px 0;
     border-bottom: 2px solid #333;
     
+}
+
+.admin-options ul {
+    display: flex;
+    flex-direction: row;
 }
 
 .admin-options ul li {
@@ -35,18 +44,18 @@
     font-size: 17px;
     font-weight: bold;
     padding: 5px 25px 5px 0;
-    color: #222;
-    border-right: 2px solid #222;
+    color: #999;
+    border-right: 2px solid #fff;
 }
 
 .admin-options ul li a:hover {
-    color: #7a858f;
+    color: #fff;
 }
 
 .column {
     margin: 0 10px;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: rgba(222, 222, 222, 0.4);
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
@@ -91,6 +100,8 @@ label {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    background:rgba(0, 0, 0, 0.4);
+    color: #fff;
 }
 
 .sell-product-submit {
@@ -125,21 +136,27 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+   
 }
 
 th, td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 th {
-    background-color: #007BFF;
+    
     color: #fff;
 }
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+    background-color: #666;
+    color: #fff;
 }
 
 .form-sell {
@@ -157,10 +174,10 @@ tr:nth-child(even) {
 }
 
 .product-sold {
-    background-color: #ff5e6b;
+    background-color: rgba(999, 0, 0, 0.2);
 }
 .product-unsold {
-    background-color: #c1ffd5;
+    background-color: rgba(0,999,0,0.2);
 }
 
 /* Media query responsiveness */

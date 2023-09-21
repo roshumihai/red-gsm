@@ -15,7 +15,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='batterie.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='phonecase.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='other.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-details.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='add-product.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='change-price.css') }}">
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
     <title>
         {% block title %}
         {% endblock %}
@@ -40,7 +43,7 @@
         </div>
         
         {% else %}
-        <a {% if request.endpoint == 'dashboard' %}class="active"{% endif %} href="{{ url_for('dashboard') }}">Home</a>
+        <a {% if request.endpoint == 'home' %}class="active"{% endif %} href="{{ url_for('home') }}">Home</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <a href="#more">More</a>

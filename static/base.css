@@ -5,7 +5,10 @@
 body {
     margin: 0;
     font-family: Roboto, Arial, sans-serif;
-    background-color: #F5F5F5 ;
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(images/pexels-tyler-lastovich-699122.jpg);
+    background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
     color: #333333;
 }
 
@@ -17,13 +20,13 @@ body {
     margin: 1% 0 0 1%;
     overflow: hidden;
     z-index: 1;
-    background-color: #F5F5F5; 
+    background-color: transparent; 
 }
 
 .topnav a {
     float: left;
     display: block;
-    color: #333333;
+    color: #888888;
     font-weight: bold;
     text-align: center;
     padding: 14px 16px;
@@ -33,12 +36,12 @@ body {
 }
 
 .topnav a:hover {
-    color: #666666 ;
+    color: #beb6b2;
     font-weight: bold;
 }
 
 .topnav a.active {
-    color: #c8024c;
+    color: #beb6b2;
     font-weight: bold;
 }
 

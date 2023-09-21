@@ -15,6 +15,14 @@ Add Products
         <li><a href="{{ url_for('other') }}">Altele</a></li>
     </ul>
 </div>
+
+<div class="admin-options">
+    <ul>
+        <li><a href="{{ url_for('add_product') }}">Add Products</a></li>
+        <li><a href="{{ url_for('change_price') }}">Change Price</a></li>
+    </ul>
+</div>
+
 <div class="add-prod-container">
     <div class="add-product-content">
         <h1>Add Product</h1>
@@ -22,7 +30,7 @@ Add Products
             {{ form.csrf_token }}
             <div>
                 <label for="category" class="add-product-label">Category:</label>
-                {{ form.category(class="add-product-form-control", id="category") }}
+                {{ form.category(class="add-product-form-control", id="category", placeholder="Choose a category", onchange="removePlaceholder(this)") }}
             </div>
 
             <div>
@@ -47,7 +55,7 @@ Add Products
         
             <div>
                 <label for="photo" class="add-product-label">Photo:</label>
-                <input type="file" name="image">
+                <input type="file" name="image" multiple>
             </div>
 
             <div>

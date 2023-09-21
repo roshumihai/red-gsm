@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms import StringField, FloatField, TextAreaField, SelectField, SubmitField, validators, PasswordField, IntegerField
+from wtforms import StringField, FloatField, TextAreaField, SelectField, SubmitField, validators, PasswordField, IntegerField, MultipleFileField
 from wtforms.validators import InputRequired, Length, ValidationError, Regexp
 from sqlalchemy import func, desc
 from flask_bcrypt import Bcrypt
@@ -83,23 +83,47 @@ class Product(db.Model):
     category = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(255))
     price = db.Column(db.Integer, nullable=False)
+    old_price = db.Column(db.Integer)
     sale_price = db.Column(db.Integer)
+    new_price = db.Column(db.Integer)
     sold = db.Column(db.Boolean, default=False)
-    image_ref = db.Column(db.String())
+    sold_date = db.Column(db.DateTime)
+    image_references = db.relationship('ImageReference', back_populates='product')
     created_at = db.Column(db.DateTime, default=datetime.now)
 
-    def __init__(self, name, category, description, price, sale_price, sold=False, image_ref=None):
+    def __init__(self, name, category, description, price, sale_price, sold=False,sold_date=None, image_references=None):
         self.name = name.lower()
         self.category = category.lower()
         self.description = description
         self.price = price
         self.sale_price = sale_price
         self.sold = sold
-        self.image_ref = image_ref
+        self.sold_date = sold_date
+        self.image_references = []
 
     def __repr__(self):
         return f"<Product id:{self.product_id}, name: {self.name}, category: {self.category}, price: {self.price}>"
 
+    def update_price(self, new_price):
+        # Update new_price with the new value
+        self.new_price = new_price
+
+        # Save the current price to old_price
+        self.old_price = self.price
+
+        # Update the current price with the new value
+        self.price = new_price
+
+
+class ImageReference(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.product_id'), nullable=False)
+    image_ref = db.Column(db.String(), nullable=False)
+    product = db.relationship('Product', back_populates='image_references')
+
+    def __init__(self, product_id, image_ref):
+        self.product_id = product_id
+        self.image_ref = image_ref
 
 
 # Classes for FlaskForm
@@ -142,18 +166,17 @@ class AddAdmin(FlaskForm):
 class AddProductForm(FlaskForm):
     name = StringField('Name', validators=[validators.InputRequired()])
     category = SelectField('Category', choices=[
-        ('choose', 'Choose from the list'),
         ('phones', 'Phones'),
         ('laptops', 'Laptops'),
         ('displays', 'Displays'),
         ('batteries', 'Batteries'),
         ('phonecases', 'Phone Cases'),
         ('others', 'Others')
-    ], validators=[validators.InputRequired()], default='choose')
+    ], validators=[validators.InputRequired()])
     description = TextAreaField('Description')
-    photo = FileField('Photo')
     price = IntegerField('Price', validators=[validators.InputRequired()])
     sale_price = IntegerField('Sale Price')
+    photo = MultipleFileField('Photos')
     submit = SubmitField('Add Product')
 
 
@@ -161,9 +184,8 @@ class AddProductForm(FlaskForm):
 
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    return redirect('dashboard')
+    return redirect(url_for('home'))
+
 
 
 @app.route('/dashboard')
@@ -177,7 +199,6 @@ def admin():
     form= AddProductForm()
 
     search_results_data = session.get('search_results', [])
-    print(search_results_data)
     search_results = []
 
     for data in search_results_data:
@@ -202,7 +223,6 @@ def admin():
 
 
 @app.route('/home', methods=['GET', 'POST'])
-@login_required
 def home():
     return render_template('home.html')
 
@@ -257,7 +277,6 @@ def logout():
 @login_required
 def add_product():
     form = AddProductForm()
-    product = None  # Initialize product as None
 
     if form.validate_on_submit() or form.is_submitted():
         name = form.name.data
@@ -265,30 +284,42 @@ def add_product():
         description = form.description.data
         price = form.price.data
         sale_price = form.sale_price.data
-        image_ref = request.files['image']
+        photos = request.files.getlist('image')  # Get a list of uploaded photos
 
-        if image_ref:
-            filename = secure_filename(image_ref.filename)
+        if sale_price is None or sale_price == "":
+            sale_price = 0
 
-            # Create a unique filename with UUID and save the uploaded file
-            filename = str(uuid.uuid4()) + '_' + filename
-            image_ref.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            image_ref = filename
-
-
-            if sale_price is None or sale_price == "":
-                sale_price = 0
-
-            new_product = Product(name=name.lower(), category=category.lower(), description=description, price=price, sale_price=sale_price, image_ref=image_ref)
-
-        else:
-            if sale_price is None or sale_price == "":
-                sale_price = 0
-
-            new_product = Product(name=name.lower(), category=category.lower(), description=description, price=price, sale_price=sale_price)
-
+        # Create and save the Product object
+        new_product = Product(
+            name=name.lower(),
+            category=category.lower(),
+            description=description,
+            price=price,
+            sale_price=sale_price,
+        )
         db.session.add(new_product)
         db.session.commit()
+
+        # Obtain the product_id for the newly created Product
+        product_id = new_product.product_id
+
+        image_references = []  # Initialize a list to store image references
+
+        # Loop through the list of uploaded photos
+        for photo in photos:
+            if photo:
+                filename = secure_filename(photo.filename)
+                filename = str(uuid.uuid4()) + '_' + filename
+                photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                # Create an ImageReference object with the product_id
+                image_reference = ImageReference(product_id=product_id, image_ref=filename)
+                image_references.append(image_reference)
+
+        if image_references:
+            # Save the ImageReference objects
+            db.session.add_all(image_references)
+            db.session.commit()
 
         form.name.data = ""
         form.category.data = ""
@@ -296,10 +327,7 @@ def add_product():
         form.price.data = ""
         form.sale_price.data = ""
 
-        # Retrieve the newly added product
-        product = new_product
-
-    return render_template('add-product.html', form=form, product=product)
+    return render_template('add-product.html', form=form)
 
 
 @app.route('/search_product', methods=['GET', 'POST'])
@@ -310,37 +338,35 @@ def search_product():
         product_name = request.form.get('product-name').lower()
         product_category = request.form.get('product-category').lower()
 
-        products = []
-
         if product_id:
-            # Search for the product by ID
-            product = Product.query.filter_by(product_id=product_id).first()
-            if product:
-                products.append(product)
-        elif product_name:
-            # Search for the product by name
-            products = Product.query.filter(Product.name.ilike(f'%{product_name}%')).all()
-        elif product_category:
-            # Search for the product by category
-            products = Product.query.filter_by(category=product_category).all()
+            searched_product = Product.query.filter_by(product_id=product_id).first()
+            if searched_product:
+                return render_template('admin', searched_products=searched_product)
 
-        products_data = []
-        for product in products:
-            product_data = {
-                'product_id': product.product_id,
-                'name': product.name,
-                'category': product.category,
-                'description': product.description,
-                'price': product.price,
-                'sold': product.sold
-            }
-            products_data.append(product_data)
+        if product_name:
+            products = Product.query.filter(Product.name.ilike(f'%{product_name}%'))
 
-        # Store the search results in the session
-        session['search_results'] = products_data
+        if product_category:
 
-        return redirect(url_for('admin'))
-    return render_template('search_product.html')
+            category_products = Product.query.filter_by(category=product_category)
+
+            # If there are products from the category, add them to the results
+
+            if category_products:
+                products += category_products
+
+        return redirect(url_for('admin.html', products=products))
+
+
+@app.route('/product-details/<int:product_id>', methods=['GET', 'POST'])
+def product_details(product_id):
+    product = Product.query.filter_by(product_id=product_id).first()
+    image_urls = [url_for('static', filename=f'uploads/{image_ref.image_ref}') for image_ref in product.image_references]
+    if product:
+        return render_template('product-details.html', product=product, image_urls=image_urls)
+    else:
+        return render_template('not-found.html')
+
 
 @app.route('/sell_product', methods=['GET', 'POST'])
 @login_required
@@ -354,10 +380,25 @@ def sell_product():
             if product:
                 product.sale_price = sale_price
                 product.sold = True
+                product.sold_date = datetime.now()
 
                 db.session.commit()
 
+                search_results_data = session.get('search_results', [])
+                for data in search_results_data:
+                    if data['product_id'] == product_id:
+                        data['sold'] = True
+                        break
+
     return redirect(url_for('admin'))
+
+
+@app.route('/change-price')
+def change_price():
+    products = Product.query.all()
+
+    return render_template('change-price.html')
+
 
 @app.route('/phone.html', methods=['POST', 'GET'])
 def phone():

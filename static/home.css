@@ -41,11 +41,12 @@
 
 .home-links-ul li a {
     text-decoration: none;
-    color: #333333;
+    color: #c5b4ab;
     padding: 5px;
+    letter-spacing: 0.4px;
 }
 
 .home-links-ul li a:hover {
-    color: #888888;
+    color: #dacec9;
 }
 

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Product Details
+{% endblock %}
+
+{% block content %}
+<div class="products-links">
+    <ul class="products-links-ul">
+        <li><a class="active" href="{{ url_for('phone') }}">Telefon</a></li>
+        <li><a href="{{ url_for('laptop') }}">Laptop</a></li>
+        <li><a href="{{ url_for('display') }}">Display</a></li>
+        <li><a href="{{ url_for('batterie') }}">Baterie</a></li>
+        <li><a href="{{ url_for('phonecase') }}">Husa</a></li>
+        <li><a href="{{ url_for('other') }}">Altele</a></li>
+    </ul>
+</div>
+
+<div class="slideshow-container">
+    {% if product.image_references %}
+        {% for image in product.image_references %}
+            <div class="mySlides fade">
+                <div class="numbertext">{{ loop.index }} / {{ product.image_references|length }}</div>
+                <div class="image-container">
+                  <img src="{{ url_for('static', filename='uploads/' + product.image_references[loop.index-1].image_ref) }}" alt="Phone Image" class="phone-image">
+                </div>
+                <div class="text">Caption Text</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/default-noimage.jpg') }}" alt="Default Image" class="product-image">
+        </div>
+    {% endif %}
+    
+    
+    
+    <a class="prev" onclick="plusSlides(-1)">❮</a>
+    <a class="next" onclick="plusSlides(1)">❯</a>
+    
+    </div>
+    <br>
+    
+    <div style="text-align:center">
+      {% for image in product.image_references %}
+      <span class="dot" onclick="currentSlide({{loop.index}})"></span> 
+      {% endfor %}
+    </div>
+
+    <div class="product-details-information">
+        <h3 class="product-details-name">{{ product.name.upper() }}</h3>
+        <p class="product-details-description">{{ product.description.title() }}</p>
+        <p class="product-details-productid">Cod Produs: {{product.product_id }}</p>
+        <p class="product-details-delivery"><strong>Durata de livrare: </strong>24-48 ore</p>
+        <h6 class="product-details-price">RON {{ product.sale_price }}</h6>
+        <button class="product-details-button">Comanda</button>
+        <p class="product-details-numbers">Ai nevoie de ajutor? <strong>0741.318.163</strong> / <strong>0740.915.025</strong></p>
+    </div>
+</div>
+
+<script>
+  showSlides(slideIndex);
+</script>
+
+{% endblock %}

@@ -6,7 +6,7 @@
 .add-product-content {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 80%;
     margin: 60px;
     padding: 0 30px 30px 30px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.5);
@@ -21,24 +21,40 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    color: #fff;
+    width: 500px;
+    
 }
 
 .add-product-label {
     margin-bottom: 5px;
-    text-align: end;
+    width: fit-content;
+}
+#category:focus {
+    background-color: #212121;
+    margin: 3px;
 }
 
 .add-product-form-control {
     width: 100%;
-    padding: 7px;
+    padding: 8px;
     margin-bottom: 15px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #999999;
+    color: #fff;
+}
+
+.add-product-form-control:focus {
+    color: #fff;
+    border: none;
 }
 
 .add-product-form-control.aplc {
     resize: none;
     overflow-y: hidden;
     scroll-behavior: smooth;
-    max-width: 350px;
+    width: 100%;
     max-height: 60px;
     min-height: 40px;
 }
@@ -50,7 +66,8 @@
 .add-product-content form div {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: left;
+    align-items:center;
     margin-bottom: 15px;
 }
 

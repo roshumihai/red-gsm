@@ -19,26 +19,34 @@ Displays
 
 <div class="display-gallery">
     {% for display in displays %}
+    {% if not display.sold %}
     <div class="display-content">
-        <div class="display-photo">
-        {% if display.image_ref %}
-            <img src="{{ url_for('static', filename='uploads/' + display.image_ref) }}" alt="Comment Image" class="product-image">
-            {% else %}
-            <img src="{{ url_for('static', filename='images/default-display.jpg') }}" alt="Comment Image" class="product-image">
-        {% endif %}
-        </div>
-        <h3>{{ display.name.title() }}</h3>
-        <p>{{ display.description }}</p>
-        <h6>RON {{ display.sale_price }}</h6>
-        <ul>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star checked"></i></li>
-            <li><i class="fa fa-star"></i></li>
-        </ul>
-        <button class="buy-3">Buy Now</button>
+        <a href="{{ url_for('product_details', product_id=display.product_id)}}">
+            <div class="display-photo-container">
+                <div class="display-photo">
+                    {% if display.image_references and display.image_references|length > 0 %}
+                        <img src="{{ url_for('static', filename='uploads/' + display.image_references[0].image_ref) }}" alt="Product Image" class="product-image" id="product-image">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/default-display.jpg') }}" alt="Default Image" class="product-image">
+                    {% endif %}
+                </div>
+            </div>
+            <h3>{{ display.name.title() }}</h3>
+            <p>{{ display.description }}</p>
+            <h6>RON {{ display.sale_price }}</h6>
+            <ul>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+                <li><i class="fa fa-star checked"></i></li>
+            </ul>
+            <div class="display-button">
+                <button>Buy Now</button>
+            </div>
+        </a>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 
